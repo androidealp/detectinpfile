@@ -66,9 +66,16 @@ $this->functions_list = array(
 
 			$detected = array();
 
-			$req = htmlentities(htmlspecialchars((isset($_REQUEST))?implode(' - ',$_REQUEST):''));
+			$req = '';
+			if(isset($_REQUEST)){
 
-			$req .= htmlentities(htmlspecialchars((isset($_FILES))?' - '.implode(' - ',$_FILES):''));
+				$req = htmlentities(htmlspecialchars(print_r($_REQUEST,true)));
+				
+			}
+
+			if(isset($_FILES)){
+				$req .= htmlentities(htmlspecialchars(print_r($_FILES,true)));
+			}
 
 			foreach ($this->functions_list as $k => $func) {
 				$pos = strpos($req, $k);
@@ -96,40 +103,6 @@ $this->functions_list = array(
 
 				JLog::add(JText::_('PHP injection detected ').$log_reg, JLog::WARNING, 'plg_detectinpfile');
 			}
-
-
-			/*
-
-			foreach ($this->functions_list as $k => $func) {
-				if(function_exists($k)){
-					$detected['msn'][] = $func; 
-				}
-			}
-
-			*/
-			/*
-			if($detected){
-
-				$req = htmlentities(htmlspecialchars((isset($_REQUEST))?implode(' - ',$_REQUEST):''));
-				$detected['vales_request']  =  $req;
-				$detected['current_url'] 	= JURI::current();
-				$jinput 					= JFactory::getApplication()->input;
-				$detected['current_opt'] 	= $jinput->get('option');
-				$detected['ip'] 			= $_SERVER['REMOTE_ADDR'];
-
-				$log_reg 	= "msn:(--".implode(',', $detected['msn'])."--) - ";
-				$log_reg   .= "requests:(--".$detected['vales_request']."--) - ";
-				$log_reg   .= "urlaction:(--".$detected['current_url']."--) - ";
-				$log_reg   .= "component:(--".$detected['current_opt']."--) - ";
-				$log_reg   .= "ip:(--".$detected['ip']."--) - ";
-
-				JLog::add('Adição de arquivo encontrado: '.$log_reg, JLog::WARNING, 'plg_detectinpfile');
-			}
-
-			*/
-
-
-
 		}
 
 	}
