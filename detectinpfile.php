@@ -56,6 +56,7 @@ $this->functions_list = array(
 		       array(
 		            // Sets file name
 		            'text_file' => 'detectinpfile.injectonsfile.php',
+		            'text_file_path' => 'logs',
 		            'text_entry_format' => '{DATETIME} {PRIORITY} {MESSAGE}'
 		       ),
 		       // Sets messages of all log levels to be sent to the file
